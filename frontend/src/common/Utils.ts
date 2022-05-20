@@ -351,4 +351,28 @@ export const defaultvar = `{"themePrimary": "",
     "white": ""
 }`
 
-export const Networks = ['ETHEREUM','BSC','RINKEBY','BSC_TESTNET', 'POLYGON']
+export const Networks = ['ETHEREUM', 'RINKEBY', 'RINKEBY', 'BSC', 'BSC_TESTNET', 'POLYGON', 'MUMBAI_TESTNET', 'AVAX_TESTNET','AVALANCHE'
+,'MOONRIVER', 'HARMONY_TESTNET','HARMONY','FTM_TESTNET','FANTOM','SHIDEN_TESTNET','SHIDEN_MAINNET','FUSE_MAINNET']
+
+export const NetworksDropdownValues = [
+    {value:'ETHEREUM',"identifier": 'ETHEREUM'}, 
+    {value:'RINKEBY',"identifier": 'RINKEBY'}, 
+    {value:'BSC',"identifier": 'BSC'}, 
+    {value:'BSC_TESTNET',"identifier": 'BSC_TESTNET'}, 
+    {value:'POLYGON',"identifier": 'POLYGON'}, 
+    {value:'MUMBAI_TESTNET',"identifier": 'MUMBAI_TESTNET'}, 
+    {value:'AVAX_TESTNET',"identifier": 'AVAX_TESTNET'}, 
+    {value:'AVAX_MAINNET',"identifier": 'AVALANCHE'}, 
+    {value:'MOON_MOONRIVER',"identifier": 'MOONRIVER'}, 
+    {value:'HARMONY_TESTNET_0',"identifier": 'HARMONY_TESTNET'}, 
+    {value:'HARMONY_MAINNET_0',"identifier": 'HARMONY'}, 
+    {value:'FTM_TESTNET',"identifier": 'FTM_TESTNET'}, 
+    {value:'FTM_MAINNET',"identifier": 'FANTOM'}, 
+    {value:'SHIDEN_TESTNET',"identifier": 'SHIDEN_TESTNET'}, 
+    {value:'SHIDEN_MAINNET',"identifier": 'SHIDEN'}, 
+    {value:'FUSE_MAINNET',"identifier": 'FUSE'}
+]
+
+export const remappedNetwork = (val) => {
+   return NetworksDropdownValues.find(e=>(e.identifier === val || e.value === val))
+}

@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { store } from './common/Store';
 // @ts-ignore
 import { Dialogue, } from 'unifyre-web-components';
-// @ts-ignore
+//@ts-ignore
 import AlertTemplate from 'react-alert-template-basic'
 import { WebDashboardContainer } from './pages/dashboard/WebDashboardContainer';
 import { WebThemeLoader } from './themeLoader';
@@ -19,8 +19,10 @@ const options = {
   // you can also just use 'bottom center'
   timeout: 4000,
 }
+
+
 //@ts-nocheck
-function App() {
+function App (): JSX.Element {
     WebThemeLoader();
     return (
         <Provider store={store}>

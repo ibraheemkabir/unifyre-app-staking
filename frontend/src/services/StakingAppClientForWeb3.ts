@@ -58,7 +58,6 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
             if (!txs || !txs.length) {
                 dispatch(addAction(Actions.STAKING_FAILED, { message: 'Could not create a stake transaction.' }));
             }
-            inject
             const connect = inject<UnifyreExtensionWeb3Client>(UnifyreExtensionWeb3Client);
             
             const res = await connect.getUserProfile()

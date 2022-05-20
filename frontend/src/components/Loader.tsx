@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Dispatch, AnyAction } from 'redux';
 import { inject } from '../common/IocModule';
 import { RootState } from '../common/RootState';
+import { NetworksDropdownValues } from '../common/Utils';
 import { StakingAppClient } from '../services/StakingAppClient';
 
 interface LoaderParams {
@@ -51,10 +52,11 @@ function Loader(params: LoaderParams&LoaderDispatch) {
     let { network, contractAddress } = useParams<{network: string, contractAddress: string}>();
     console.log('NETWORK GOTO', network, contractAddress)
     const { userAddress, onLoad, stakingNetwork } = params;
-    network = network || params.network;
+    const remappedNetwork = NetworksDropdownValues.find(e=>e.identifier === network)
+    network = remappedNetwork?.value || network || params.network;
     useEffect(() => {
         if (contractAddress) {
-            onLoad(network , userAddress, contractAddress,stakingNetwork);
+            onLoad(network as any , userAddress, contractAddress,stakingNetwork);
         }
     }, [contractAddress, network, userAddress, onLoad,stakingNetwork]);
     return (

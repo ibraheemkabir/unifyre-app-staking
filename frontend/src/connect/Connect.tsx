@@ -3,6 +3,7 @@ import { UnifyreExtensionKitClient, } from 'unifyre-extension-sdk';
 import { Connect } from 'unifyre-extension-web3-retrofit/dist/contract/Connect';
 import { Web3ModalProvider } from 'unifyre-extension-web3-retrofit/dist/contract/Web3ModalProvider';
 import { AppUserProfile } from 'unifyre-extension-sdk/dist/client/model/AppUserProfile';
+import { Networks } from 'ferrum-plumbing';
 import { ValidationUtils } from 'ferrum-plumbing';
 import { AnyAction } from 'redux';
 import { CurrencyList, UnifyreExtensionWeb3Client } from 'unifyre-extension-web3-retrofit';
@@ -15,7 +16,6 @@ export const ConnectActions = {
     CONNET_CLEAR_ERROR: 'CONNET_CLEAR_ERROR',
     USER_DATA_RECEIVED: 'USER_DATA_RECEIVED',
 }
-import { Networks } from 'ferrum-plumbing';
 
 export const DEFAULT_TOKEN_FOR_WEB3_MODE = {
     4: 'RINKEBY:0x93698a057cec27508a9157a946e03e277b46fe56',
@@ -102,7 +102,7 @@ async function doConnect(dispatch: Dispatch<AnyAction>,
             const defaultCur = (DEFAULT_TOKEN_FOR_WEB3_MODE as any)[net as any];
             
             console.log(`Connected to net id ${net} with no defined currency: ${defaultCur}`);
-            console.log(dep.currencyList.get(),'currencyList.get()currencyList.get()')
+            console.log(dep.currencyList.get(),'currencyList.get()currencyList.get()',BRIDGE_NETWORKS)
             const cur2 = dep.currencyList.get();
             dep.currencyList.set([...BRIDGE_NETWORKS].map(n => Networks.for(n).baseCurrency));
             dep.currencyList.set([...cur2,...dep.currencyList.get()])
@@ -118,7 +118,6 @@ async function doConnect(dispatch: Dispatch<AnyAction>,
         });
         const userProfile = await dep.client.getUserProfile();
         const res = await dep.ApiClient.signInToServer2(userProfile);
-        console.log(userProfile,"userProfileuserProfile")
         if (res) {
             
             const userProfile = await dep.client.getUserProfile();

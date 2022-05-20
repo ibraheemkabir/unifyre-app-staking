@@ -143,7 +143,7 @@ export function ConnectButtonWapper(props: IConnectOwnProps) {
     useSelector((state:any) => console.log(state))
     const connected = useSelector((state:any) => 
         !!state.data.account?.user?.userId);
-    const address = useSelector((state:any) => 
+    const address:any = useSelector((state:any) => 
         addressForUser(state.data.account?.user));
     const balances = useSelector((state:any) => 
         addressesForUser(state.data.account?.user));

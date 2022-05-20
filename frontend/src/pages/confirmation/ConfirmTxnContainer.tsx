@@ -18,6 +18,7 @@ function ConfirmationComponent(props: ConfirmationProps&ConfirmationDispatch) {
                     formatter.format(props.amount, false)} ${props.stakeEvent?.symbol || ''}`
     );
     const gidPrefix = props.groupId ? `/${props.groupId}` : '';
+    console.log(props,'propspspsp')
     return (
         <Page>
             <PageTopPart>
