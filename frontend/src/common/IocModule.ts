@@ -25,7 +25,7 @@ interface Config {
 const LOCAL_DEV_CONF = {
     // unifyreBackend: 'http://localhost:9000/api/',
     unifyreBackend: 'https://ube.ferrumnetwork.io/api/',
-    poolDropBackend: 'https://r87ukhl9q2.execute-api.us-east-2.amazonaws.com/default/updated-staking-backend-dev',
+    poolDropBackend: 'https://y6sl343dn6.execute-api.us-east-2.amazonaws.com/default/prod-unifyre-extension-staking-backend',
     //poolDropBackend: 'http://da208211a392.ngrok.io',
     //'https://r87ukhl9q2.execute-api.us-east-2.amazonaws.com/default/updated-staking-backend-dev'
     isProd: false,
@@ -60,12 +60,12 @@ const url = () =>{
         return prefix;
     }
 }
-// export const CONFIG = PROD_CONF;
+export const CONFIG = PROD_CONF;
 
-export const CONFIG = url() === 'prod' ? PROD_CONF 
-                    : url() === 'dev' ? LOCAL_DEV_CONF 
-                    : url() === 'staging' ? LOCAL_DEV_CONF 
-                    : (DEV_USES_LOCAL ? LOCAL_DEV_CONF : REMOTE_DEV_CONF);
+// export const CONFIG = url() === 'prod' ? PROD_CONF 
+//                     : url() === 'dev' ? LOCAL_DEV_CONF 
+//                     : url() === 'staging' ? LOCAL_DEV_CONF 
+//                     : (DEV_USES_LOCAL ? LOCAL_DEV_CONF : REMOTE_DEV_CONF);
 
 export class IocModule {
     private static _container: Container;
@@ -79,7 +79,6 @@ export class IocModule {
         c.register(LoggerFactory, () => new LoggerFactory(n => new ConsoleLogger(n)));
         c.register('JsonStorage', () => new DummyStorage());
         await c.registerModule(new ClientModule(CONFIG.unifyreBackend, 'STAKING'));
-        console.log(BackendMode.mode,'BackendModeBackendModeBackendMode')
         if (BackendMode.mode === 'unifyre') {
             c.registerSingleton(StakingAppClient,
                 c => new StakingAppClient(c.get(UnifyreExtensionKitClient),c.get(UnifyreExtensionWeb3Client)));
@@ -92,6 +91,7 @@ export class IocModule {
                 new StakingAppClientForWeb3(c.get(UnifyreExtensionKitClient),c.get(UnifyreExtensionWeb3Client)));
             const client = c.get<StakingAppClient>(StakingAppClient);
             const providers = await client.loadHttpProviders(dispatch);
+            console.log(providers)
         }
 
         c.registerSingleton(ConnectorContainer, c => new ConnectorContainer());

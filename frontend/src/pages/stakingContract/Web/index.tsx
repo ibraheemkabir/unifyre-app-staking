@@ -37,7 +37,7 @@ function StakingContractComponent(props: StakingContractProps&StakingContractDis
             }, (moment(props.contract.withdrawStarts * 1000).diff(moment(Date.now()))))
         }
        
-    }, [props])
+    }, [props.contract?.network, props.contract?.contractAddress])
 
     return (
         <Page>

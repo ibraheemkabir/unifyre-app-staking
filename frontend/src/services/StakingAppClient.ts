@@ -494,10 +494,8 @@ export class StakingAppClient implements Injectable {
         const token = this.getToken(dispatch);
         try {
             dispatch(addAction(CommonActions.WAITING, { source: 'processRequest' }));
-            console.log('responseresponseresponse');
 
             const response = await this.client.getSendTransactionResponse(requestId);
-            console.log(response,'responseresponseresponse');
             if (response.rejected) {
                 throw new Error((response as any).reason || 'Request was rejected');
             }

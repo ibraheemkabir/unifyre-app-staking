@@ -83,6 +83,17 @@ function DashboardComponent(props: DashboardProps&DashboardDispatch) {
     const themeVariables = useTheme();
     const theme = _loadTheme(themeVariables, props.customTheme);
 
+    useEffect(() => {
+      console.log(props, 'propsprops')
+      const title = document.querySelector('title')
+      const favicon = document.getElementById("dynfav");
+      //@ts-ignore
+      title.textContent = props.customTheme?.pageTitleText || 'Staking App';
+      //@ts-ignore
+      favicon.href = props.customTheme?.faviconImg || 'https://ferrum.network/wp-content/uploads/2021/05/ferrum-network-favicon.png'
+    }, [groupId, theme])
+
+
     const testAlert = CONFIG.isProd ? undefined : (
       <><Row withPadding><Text size={'largest'} content={'TEST MODE'}/></Row></>)
     if (props.initialized) {

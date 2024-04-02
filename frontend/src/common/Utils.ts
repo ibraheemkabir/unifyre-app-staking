@@ -413,7 +413,7 @@ export const defaultvar = `{"themePrimary": "",
 }`
 
 export const Networks = ['ETHEREUM', 'RINKEBY', 'RINKEBY', 'BSC', 'BSC_TESTNET', 'POLYGON', 'MUMBAI_TESTNET', 'AVAX_TESTNET','AVALANCHE'
-,'MOONRIVER', 'HARMONY_TESTNET','HARMONY','FTM_TESTNET','FANTOM','SHIDEN_TESTNET','SHIDEN_MAINNET','FUSE_MAINNET','VELAS_MAINNET', 'ARBITRUM_ETHEREUM']
+,'MOONRIVER', 'HARMONY_TESTNET','HARMONY','FTM_TESTNET','FANTOM','SHIDEN_TESTNET','SHIDEN_MAINNET','FUSE_MAINNET','VELAS_MAINNET']
 
 export const NetworksDropdownValues = [
     {value:'ETHEREUM',"identifier": 'ETHEREUM'}, 
@@ -433,6 +433,7 @@ export const NetworksDropdownValues = [
     {value:'SHIDEN_MAINNET',"identifier": 'SHIDEN'}, 
     {value:'FUSE_MAINNET',"identifier": 'FUSE'},
     {value:'ARBITRUM_ETHEREUM',"identifier": 'ARBITRUM_ETHEREUM'},
+    {value:'ETHEREUM_ARBITRUM',"identifier": 'ARBITRUM_ETHEREUM'},
 //    
 ]
 

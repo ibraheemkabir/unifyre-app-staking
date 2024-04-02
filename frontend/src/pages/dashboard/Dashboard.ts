@@ -40,7 +40,7 @@ function mapStateToProps(state: RootState): DashboardProps {
     console.log(stakingData?.network, address?.network)
     const remappedNetwork = (val) => NetworksDropdownValues.find(e=>e.value===val)?.identifier || val
     const netError = stakingData?.network && address?.network &&
-        (stakingData?.network !== address?.network) ?
+        (stakingData?.network !== remappedNetwork(address.network)) ?
         `You are connected to ${remappedNetwork(address.network)}. Please connect to ${remappedNetwork(stakingData!.network)} for the current staking` :
         '';
     return {
@@ -111,7 +111,6 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
                 
                 const currencyList = inject<CurrencyList>(CurrencyList);
                 currencyList.set([groupInfo.defaultCurrency, 'ARBITRUM_ETHEREUM:0x32794Db72F65BF6533879BdBA5249784e5e49a44']);
-                console.log(currencyList.get(),"currencyListcurrencyList")
                 loadThemeForGroup(groupInfo.themeVariables);
                 await client.loadStakingsForToken(dispatch, groupInfo.defaultCurrency);
                 dispatch(addAction(Actions.INIT_SUCCEED, {}));

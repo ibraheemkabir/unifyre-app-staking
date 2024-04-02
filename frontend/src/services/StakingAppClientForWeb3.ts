@@ -61,7 +61,7 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
             const connect = inject<UnifyreExtensionWeb3Client>(UnifyreExtensionWeb3Client);
             
             const res = await connect.getUserProfile()
-            const requestId = await connect.sendTransactionAsync(network, txs,
+            const requestId = await this.sendTransactionAsync(network, requests,
                 {amount, contractAddress, action: 'stake'})
             console.log(requestId,'resresres')
     
@@ -98,7 +98,7 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
             }
             const connect = inject<UnifyreExtensionWeb3Client>(UnifyreExtensionWeb3Client);
             const res = await connect.getUserProfile()
-            const requestId = await connect.sendTransactionAsync(network, txs,
+            const requestId = await this.sendTransactionAsync(network, requests,
                 {amount, contractAddress, action: 'unstake'});
             if (!requestId) {
                 dispatch(addAction(Actions.UN_STAKING_FAILED, { message: 'Could not submit transaction.' }));
@@ -128,8 +128,8 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
             if (!txs || !txs.length) {
                 dispatch(addAction(Actions.UN_STAKING_FAILED, { message: 'Could not create an un-stake transaction.' }));
             }
-            const requestId = await this.client.sendTransactionAsync(network, txs,
-                {amount: '0', contractAddress, action: 'unstake'});
+            const requestId = await this.sendTransactionAsync(network, requests,
+                {amount: '0', contractAddress, action: 'unstake'});   
             if (!requestId) {
                 dispatch(addAction(Actions.UN_STAKING_FAILED, { message: 'Could not submit transaction.' }));
             }
@@ -172,7 +172,8 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
             if (!providers) {
                 throw new Error('getHttpProviders returned empty');
             }
-            return providers;
+            let response = {...providers, ETHEREUM_ARBITRUM: "https://nd-827-555-321.p2pify.com/fc3eea1a96148177e332fff558188fa9", ARBITRUM_ETHEREUM: "https://nd-827-555-321.p2pify.com/fc3eea1a96148177e332fff558188fa9" }
+            return response;
         } finally {
             dispatch(addAction(CommonActions.WAITING_DONE, { source: 'loadHttpProviders' }));
         }
@@ -180,5 +181,28 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
 
     protected getToken(dispatch: Dispatch<AnyAction>) {
         return '';
+    }
+
+    async sendTransactionAsync(
+        network: Network, transactions: CustomTransactionCallRequest[],
+        payload?: any
+    ) {
+        const txIds: string[] = [];
+        for (const tx of transactions) {
+            const txId =  await new Promise<string>((resolve, reject) =>
+                (window as any).ethereum.request({
+                    method: "eth_sendTransaction",
+                    params: [{
+                        from: tx.from,
+                        to: tx.contract,
+                        value: tx.value || 0,
+                        data: tx.data,
+                    }]
+                }).then((h: any) => resolve(h)).catch(reject)
+            )
+            txIds.push(txId);
+        }
+        // We should return a request ID. In this case we just return tx IDs as the request ID
+        return txIds.join(',') + '|' + JSON.stringify(payload || '');
     }
 }

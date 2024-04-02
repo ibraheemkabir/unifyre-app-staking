@@ -141,7 +141,6 @@ export function TransactionContinuation({
     }) {
     const history = useHistory();
     useEffect(() => {
-        console.log('heloooooooo',requestId)
         if (requestId) {
             onLoad(requestId);
         }
@@ -150,7 +149,6 @@ export function TransactionContinuation({
     useEffect(() => {
         if (transactionStatus === 'pending'){
             const interval = setInterval(() => {
-                console.log('callinginngngngn')
                 onRefresh().catch(console.error);
               }, 15000);
             return () => clearInterval(interval);

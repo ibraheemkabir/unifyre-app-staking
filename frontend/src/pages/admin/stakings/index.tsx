@@ -66,7 +66,7 @@ function SaerchStakingInfo(props: SaerchStakingGroupInfoProps&SaerchStakingGroup
 
     const remappedNetwork = NetworksDropdownValues.find(e=>e.value===props.selectedStaking.network)?.identifier || props.selectedStaking.network
 
-    const url = (curr:string) => `https://stake.unifyre.io/${curr}/info/${props.selectedStaking.contractAddress}/${remappedNetwork}`
+    const url = (curr:string) => `https://stake.ferrumnetwork.io/${curr}/info/${props.selectedStaking.contractAddress}/${remappedNetwork}`
 
     const infoCards = ( info : StakingApp,index:number ) => (
         <div className="info-card" onClick={ () =>  props.onSelect(index,props.stakings)}>
