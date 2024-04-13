@@ -432,9 +432,7 @@ export const NetworksDropdownValues = [
     {value:'SHIDEN_TESTNET',"identifier": 'SHIDEN_TESTNET'}, 
     {value:'SHIDEN_MAINNET',"identifier": 'SHIDEN'}, 
     {value:'FUSE_MAINNET',"identifier": 'FUSE'},
-    {value:'ARBITRUM_ETHEREUM',"identifier": 'ARBITRUM_ETHEREUM'},
-    {value:'ETHEREUM_ARBITRUM',"identifier": 'ARBITRUM_ETHEREUM'},
-//    
+    {value:'ARBITRUM_ETHEREUM',"identifier": 'ARBITRUM_ETHEREUM'}
 ]
 
 export const remappedNetwork = (val) => {
