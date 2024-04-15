@@ -28,7 +28,6 @@ function App (): JSX.Element {
     return (
         <Provider store={store}>
           <Dialogue.Component />
-          //@ts-ignore
           <ToastProvider>
             <AlertProvider template={AlertTemplate} {...options}>
               <Router>

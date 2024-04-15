@@ -91,7 +91,7 @@ export class Utils {
             case 'avax_testnet':
                 return `https://testnet.snowtrace.io/address/${addr}`;
             case 'avax_mainnet':
-                return `https://testnet.snowtrace.io/address/${addr}`;
+                return `https://snowtrace.io/address/${addr}`;
             case 'moon_moonbase':
                 return `https://moonbase.moonscan.io/address/${addr}`;
             case 'avax_mainnnet':
@@ -135,7 +135,7 @@ export class Utils {
             case 'avax_testnet':
                 return `https://testnet.snowtrace.io//tx/${tid}`;
             case 'avax_mainnet':
-                return `https://testnet.snowtrace.io//tx/${tid}`;
+                return `https://snowtrace.io//tx/${tid}`;
             case 'moon_moonbase':
                 return `https://moonbase.moonscan.io/tx/${tid}`;
             case 'avax_mainnnet':

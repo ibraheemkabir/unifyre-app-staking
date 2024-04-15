@@ -61,7 +61,7 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
             const connect = inject<UnifyreExtensionWeb3Client>(UnifyreExtensionWeb3Client);
             
             const res = await connect.getUserProfile()
-            const requestId = await this.sendTransactionAsync(network, requests,
+            const requestId = await this.sendTransactionAsync(network, txs,
                 {amount, contractAddress, action: 'stake'})
             console.log(requestId,'resresres')
     
@@ -98,7 +98,7 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
             }
             const connect = inject<UnifyreExtensionWeb3Client>(UnifyreExtensionWeb3Client);
             const res = await connect.getUserProfile()
-            const requestId = await this.sendTransactionAsync(network, requests,
+            const requestId = await this.sendTransactionAsync(network, txs,
                 {amount, contractAddress, action: 'unstake'});
             if (!requestId) {
                 dispatch(addAction(Actions.UN_STAKING_FAILED, { message: 'Could not submit transaction.' }));
@@ -128,7 +128,7 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
             if (!txs || !txs.length) {
                 dispatch(addAction(Actions.UN_STAKING_FAILED, { message: 'Could not create an un-stake transaction.' }));
             }
-            const requestId = await this.sendTransactionAsync(network, requests,
+            const requestId = await this.sendTransactionAsync(network, txs,
                 {amount: '0', contractAddress, action: 'unstake'});   
             if (!requestId) {
                 dispatch(addAction(Actions.UN_STAKING_FAILED, { message: 'Could not submit transaction.' }));

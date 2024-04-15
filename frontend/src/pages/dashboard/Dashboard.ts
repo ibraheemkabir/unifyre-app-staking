@@ -37,10 +37,9 @@ function mapStateToProps(state: RootState): DashboardProps {
     const stakingData = state.data.stakingData.selectedContract;
     const addr = userProfile?.accountGroups[0]?.addresses || {};
     const address = addr[0] || {};
-    console.log(stakingData?.network, address?.network)
     const remappedNetwork = (val) => NetworksDropdownValues.find(e=>e.value===val)?.identifier || val
     const netError = stakingData?.network && address?.network &&
-        (stakingData?.network !== remappedNetwork(address.network)) ?
+        (stakingData?.network !== remappedNetwork(address.network) && stakingData?.network !== address.network) ?
         `You are connected to ${remappedNetwork(address.network)}. Please connect to ${remappedNetwork(stakingData!.network)} for the current staking` :
         '';
     return {
