@@ -97,6 +97,19 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
                     new Big(props.amount || '0').lt(new Big(props.contract.maxContribution)),
                     `Maximum contribution is ${props.contract.maxContribution} ${props.contract.symbol}`);
             }
+
+            const now = Date.now() / 1000;
+            if (now < props.contract.stakingStarts) {
+                 //@ts-ignore
+                 dispatch(addAction(StakingAppServiceActions.STAKING_FAILED, { message: "Staking period has not commenced for this pool." }));
+                 return
+            }
+            if (now > props.contract.stakingEnds) {
+                //@ts-ignore
+                dispatch(addAction(StakingAppServiceActions.STAKING_FAILED, { message: "Staking failed, staking period has concluded for this pool." }));
+                return
+            }
+            
             await IocModule.init(dispatch);
             const client = inject<StakingAppClient>(StakingAppClient);
             const data = await client.stakeSignAndSend(

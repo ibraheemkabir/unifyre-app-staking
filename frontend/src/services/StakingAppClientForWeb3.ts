@@ -63,7 +63,6 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
             const res = await connect.getUserProfile()
             const requestId = await this.sendTransactionAsync(network, txs,
                 {amount, contractAddress, action: 'stake'})
-            console.log(requestId,'resresres')
     
             if (!requestId) {
                 dispatch(addAction(Actions.STAKING_FAILED, { message: 'Could not submit transaction.' }));
@@ -188,7 +187,9 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
         payload?: any
     ) {
         const txIds: string[] = [];
+        let count = 0;
         for (const tx of transactions) {
+            let result
             const txId =  await new Promise<string>((resolve, reject) =>
                 (window as any).ethereum.request({
                     method: "eth_sendTransaction",
@@ -198,9 +199,28 @@ export class StakingAppClientForWeb3 extends StakingAppClient {
                         value: tx.value || 0,
                         data: tx.data,
                     }]
-                }).then((h: any) => resolve(h)).catch(reject)
+                }).then((h: any) => {
+                    if (h) {
+                        if (transactions.length > 1 && (count != transactions.length - 1)) {
+                            const interval = setInterval(
+                                async () => {
+                                    result = await (window as any).ethereum.request({
+                                        method: "eth_getTransactionReceipt",
+                                        params: [h]
+                                    })
+                                    if (result) {
+                                        clearInterval(interval)
+                                        resolve(h)
+                                    }
+                                }, 1500);    
+                        } else {
+                            resolve(h)
+                        }           
+                    }
+                }).catch(reject)
             )
             txIds.push(txId);
+            count+=1;
         }
         // We should return a request ID. In this case we just return tx IDs as the request ID
         return txIds.join(',') + '|' + JSON.stringify(payload || '');

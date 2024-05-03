@@ -180,14 +180,16 @@ export function NavBar(props: ReponsivePageWrapperProps&ReponsivePageWrapperDisp
 
     const ConBot = ConnectorContainer.Connect(props.container, ConButton);
     const ConBot2 = <ConnectButtonWapper View={ConnectBtn} />
-
+    const header = window.location?.pathname
+    const logo = !header.includes('admin') ? theme.get(Theme.Logo.logo)  as any : "https://ferrum.network/wp-content/uploads/2021/05/ferrum-network-favicon.png"
+    
     return (
         <>
             <div className="nav-bar page-container" style={{...styles.container}}>
                 <a href={props.homepage}>
                 <img
                     className="logo_img"
-                    src={theme.get(Theme.Logo.logo)  as any}
+                    src={logo}
                     style={{height: theme.get(Theme.Logo.logoHeight) > 0 ? theme.get(Theme.Logo.logoHeight) : undefined}}
                     alt="Logo"
                 /> 
