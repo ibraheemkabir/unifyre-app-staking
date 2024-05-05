@@ -114,6 +114,8 @@ export class Utils {
                 return `https://evmexplorer.velas.com/address/${addr}`;
             case 'arbitrum_ethereum':
                 return `https://arbiscan.io/address/${addr}`;
+            case 'base_ethereum':
+                return `https://basescan.org/address/${addr}`;
         }
         return '';
     }
@@ -158,6 +160,8 @@ export class Utils {
                 return `https://evmexplorer.velas.com/tx/${tid}`;
             case 'arbitrum_ethereum':
                 return `https://arbiscan.io/tx/${tid}`;
+            case 'base_ethereum':
+                return `https://basescan.org/tx/${tid}`;
         }
         return '';
     }
@@ -413,7 +417,7 @@ export const defaultvar = `{"themePrimary": "",
 }`
 
 export const Networks = ['ETHEREUM', 'RINKEBY', 'RINKEBY', 'BSC', 'BSC_TESTNET', 'POLYGON', 'MUMBAI_TESTNET', 'AVAX_TESTNET','AVALANCHE'
-,'MOONRIVER', 'HARMONY_TESTNET','HARMONY','FTM_TESTNET','FANTOM','SHIDEN_TESTNET','SHIDEN_MAINNET','FUSE_MAINNET','VELAS_MAINNET']
+,'MOONRIVER', 'HARMONY_TESTNET','HARMONY','FTM_TESTNET','FANTOM','SHIDEN_TESTNET','SHIDEN_MAINNET','FUSE_MAINNET','VELAS_MAINNET', 'BASE_ETHEREUM']
 
 export const NetworksDropdownValues = [
     {value:'ETHEREUM',"identifier": 'ETHEREUM'}, 
@@ -432,7 +436,8 @@ export const NetworksDropdownValues = [
     {value:'SHIDEN_TESTNET',"identifier": 'SHIDEN_TESTNET'}, 
     {value:'SHIDEN_MAINNET',"identifier": 'SHIDEN'}, 
     {value:'FUSE_MAINNET',"identifier": 'FUSE'},
-    {value:'ARBITRUM_ETHEREUM',"identifier": 'ARBITRUM_ETHEREUM'}
+    {value:'ARBITRUM_ETHEREUM',"identifier": 'ARBITRUM_ETHEREUM'},
+    {value:'BASE_ETHEREUM',"identifier": 'BASE_ETHEREUM'}
 ]
 
 export const remappedNetwork = (val) => {
