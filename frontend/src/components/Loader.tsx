@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
     onLoad: async (network, userAddress, contratAddress) => {
         try {
             if (!network || !userAddress || !contratAddress) {
-                if (!!contratAddress) {
+                if (!!contratAddress && !!network) {
                     const client = inject<StakingAppClient>(StakingAppClient);
                     await client.selectStakingContractByAddress(dispatch,
                         network,
@@ -57,7 +57,6 @@ function Loader(params: LoaderParams&LoaderDispatch) {
     network = remappedNetwork?.value || network || params.network;
     console.log(userAddress)
     useEffect(() => {
-        console.log(userAddress,"helloo")
         if (contractAddress) {
             onLoad(network as any , userAddress, contractAddress,stakingNetwork);
         }

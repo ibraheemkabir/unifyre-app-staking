@@ -331,6 +331,7 @@ export class StakingAppClient implements Injectable {
                 return;
             }
             dispatch(addAction(Actions.STAKING_CONTACT_RECEIVED, { stakingContract }));
+            dispatch(addAction(Actions.GET_STAKING_CONTRACT_FAILED, { message: '' }));
         } catch (e) {
             logError('Error sigining in', e);
             dispatch(addAction(Actions.GET_STAKING_CONTRACT_FAILED, { message: 'Could get the staking contract data' + e.message || '' }));
@@ -350,9 +351,12 @@ export class StakingAppClient implements Injectable {
                 dispatch(addAction(Actions.GET_STAKING_CONTRACT_FAILED, { message: 'Could not get the staking contract data' }));
                 return;
             }
+            console.log("hellohere")
             dispatch(addAction(Actions.STAKING_CONTACT_RECEIVED, { stakingContract }));
             dispatch(addAction(Actions.USER_STAKE_RECEIVED, { userStake }));
             dispatch(addAction(Actions.USER_STAKE_EVENTS_RECEIVED, { stakeEvents }));
+            dispatch(addAction(Actions.GET_STAKING_CONTRACT_FAILED, { message: '' }));
+
             setTimeout(() => this.refreshStakeEvents(dispatch, stakeEvents), 1000);
             return userStake;
         } catch (e) {
@@ -422,7 +426,7 @@ export class StakingAppClient implements Injectable {
                 dispatch(addAction(Actions.STAKING_FAILED, { message: 'Could not send a sign request.' }));
             }
             openUnifyre();
-            await this.processRequest(dispatch, requestId);
+            await this.processRequest(dispatch, requestId, network);
             return 'success' as string;
         } catch (e) {
             logError('Error signAndSend', e);
@@ -489,8 +493,7 @@ export class StakingAppClient implements Injectable {
         }
     }
 
-    async processRequest(dispatch: Dispatch<AnyAction>, 
-        requestId: string) {
+    async processRequest(dispatch: Dispatch<AnyAction>, requestId: string, networkInput?: string) {
         const token = this.getToken(dispatch);
         try {
             dispatch(addAction(CommonActions.WAITING, { source: 'processRequest' }));
@@ -502,11 +505,16 @@ export class StakingAppClient implements Injectable {
             const txIds = (response.response || [])?.map(r => r.transactionId);
             const payload = response.requestPayload || {};
             const { amount, network, contractAddress, action } = payload;
+
             const res = await this.api({
                 command: 'stakeEventProcessTransactions', data: {
-                    token, amount, eventType: action || 'stake',
-                    network,
-                    contractAddress, txIds},
+                    token,
+                    amount,
+                    eventType: action || 'stake',
+                    network: network || networkInput,
+                    contractAddress,
+                    txIds
+                },
                 params: []}as JsonRpcRequest) as {stakeEvent?: StakeEvent};
             const stakeEvent = res.stakeEvent;
             ValidationUtils.isTrue(!!stakeEvent, 'Error while getting the transaction! Your stake might have been executed. Please check etherscan for a pending stake transation');

@@ -83,7 +83,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
     onLoad: async (network, userAddress, contratAddress) => {
         try {
             if (!network || !userAddress || !contratAddress) {
-                if (!!contratAddress) {
+                if (!!contratAddress && !!network) {
                     const client = inject<StakingAppClient>(StakingAppClient);
                     await client.selectStakingContractByAddress(dispatch,
                         network,

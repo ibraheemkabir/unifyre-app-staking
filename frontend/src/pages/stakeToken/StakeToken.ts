@@ -106,7 +106,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
             }
             if (now > props.contract.stakingEnds) {
                 //@ts-ignore
-                dispatch(addAction(StakingAppServiceActions.STAKING_FAILED, { message: "Staking failed, staking period has concluded for this pool." }));
+                dispatch(addAction(StakingAppServiceActions.STAKING_FAILED, { message: "Staking period has concluded for this pool." }));
                 return
             }
             
